@@ -1,0 +1,32 @@
+#pagination {
+  display: flex;
+  justify-content: center;
+}
+.blocks {
+  width: 40px;
+  line-height: 40px;
+  text-align: center;
+  border: 1px solid #dddddd;
+  display: inline-block;
+  text-decoration: none;
+  color: black;
+  border-radius: 50%;
+}
+.blocks:not(:first-child) {
+  margin-left: 5px;
+}
+.blocks:first-child {
+  border-radius: 10px 0 0 10px;
+}
+.blocks:last-child {
+  border-radius: 0 10px 10px 0;
+}
+.blocks:hover {
+  background-color: #dddddd;
+  color: #1d201d;
+}
+
+#pagination button.active {
+  background-color: #1d201d;
+  color: white;
+}

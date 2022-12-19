@@ -1,0 +1,126 @@
+@import url("https://fonts.googleapis.com/css2?family=Kaushan+Script&display=swap");
+nav {
+  box-shadow: rgba(17, 17, 26, 0.1) 0px 1px 0px;
+}
+.logo {
+  height: 40px;
+  margin-left: 0.6rem;
+}
+.nav-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
+}
+
+.links a {
+  font-size: 1rem;
+  text-transform: capitalize;
+  letter-spacing: 0.1rem;
+  display: block;
+  padding: 0.5rem 0;
+  transition: all 0.3s linear;
+}
+.links a:hover {
+  background: gainsboro;
+  color: #717171;
+  text-decoration: underline;
+  padding-left: 0.5rem;
+}
+.input-wrapper {
+  display: flex;
+
+  justify-content: space-between;
+  align-items: center;
+  width: 70%;
+  background: #eeeeee;
+
+  border-radius: 10px;
+  color: #7f7f7f;
+  padding: 0.6rem 1rem;
+}
+.input {
+  /* margin: 0 0.5rem; */
+  width: 100%;
+  border: none;
+  outline: none;
+  background: #eeeeee;
+  color: #7f7f7f;
+  font-size: 1.3rem;
+}
+
+.search-icon {
+  border-style: none;
+  background-color: #eeeeee;
+}
+
+ul {
+  list-style-type: none;
+}
+a {
+  text-decoration: none;
+  color: gray;
+}
+
+.nav-toggle {
+  font-size: 1.5rem;
+  color: gray;
+  background: transparent;
+  border-color: transparent;
+  transition: all 0.3s linear;
+  cursor: pointer;
+}
+.nav-toggle:hover {
+  color: black;
+  transform: rotate(90deg);
+}
+.links-container {
+  height: 0;
+  overflow: hidden;
+  transition: all 0.3s linear;
+}
+@media screen and (min-width: 800px) {
+  .nav-center {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1300px;
+    margin: 0 auto;
+  }
+  .nav-header {
+    width: 80%;
+  }
+
+  .input-wrapper {
+    display: flex;
+
+    justify-content: space-between;
+    align-items: center;
+    width: 90%;
+    background: #eeeeee;
+
+    border-radius: 10px;
+    color: #7f7f7f;
+    padding: 0.6rem 1rem;
+  }
+  .nav-toggle {
+    display: none;
+  }
+  .links-container {
+    height: auto !important;
+  }
+  .links {
+    margin: auto 0;
+    display: flex;
+  }
+  .links a {
+    padding: 0;
+    margin: 0 1rem;
+  }
+  .links a:hover {
+    background: transparent;
+    padding: 0;
+    color: rgb(255, 0, 30);
+    text-decoration: underline;
+  }
+}
