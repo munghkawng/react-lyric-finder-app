@@ -8,7 +8,11 @@ export const useFetch = (url) => {
   useEffect(() => {
     const getSongData = async () => {
       try {
-        const { data } = await axios(url);
+        const { data } = await axios(url, {
+          headers: {
+            "Access-Control-Allow-Origin": "*",
+          },
+        });
 
         setSongData(data);
         setLoading(false);

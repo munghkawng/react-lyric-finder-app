@@ -1,7 +1,9 @@
 import "./navbar.css";
-import { FaBars } from "react-icons/fa";
+
 import { Link } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
+import SearchBar from "./SearchBar";
+
 function Navbar() {
   const [showLinks, setShowLinks] = useState(false);
 
@@ -30,21 +32,7 @@ function Navbar() {
           </Link>
 
           {/* search bar */}
-          <div className="input-wrapper">
-            <input
-              type="text"
-              className="input"
-              placeholder="Search Song Lyrics.."
-            />
-            <div className="fa-solid fa-magnifying-glass search-icon"></div>
-          </div>
-
-          <button
-            className="nav-toggle"
-            onClick={() => setShowLinks(!showLinks)}
-          >
-            <FaBars />
-          </button>
+          <SearchBar setShowLinks={setShowLinks} showLinks={showLinks} />
         </div>
 
         {/* nav link */}
@@ -53,6 +41,7 @@ function Navbar() {
             <li>
               <Link to="/artists">Artists</Link>
             </li>
+
             <li>
               <Link to="/all-lyrics">Lyrics</Link>
             </li>

@@ -12,13 +12,18 @@ import AllArtistPage from "./components/page/AllArtistPage";
 import SongContext from "./Context";
 
 import { useFetch } from "./components/CustomHook";
+import { useState } from "react";
 
 const songListUrl = "https://guitaristchord.com/api/songs";
 function App() {
   const { loading, songData } = useFetch(songListUrl);
+  const [hasFocus, setFocus] = useState(false);
+  const [query, setQuery] = useState("");
 
   return (
-    <SongContext.Provider value={{ songData, loading }}>
+    <SongContext.Provider
+      value={{ songData, loading, hasFocus, setFocus, query, setQuery }}
+    >
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<ShareLayout />}>

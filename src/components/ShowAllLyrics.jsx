@@ -3,14 +3,17 @@ import { useState, useEffect } from "react";
 import { paginate } from "../paginate";
 import Loading from "./Loading";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+
 const showAllLyricUrl = "https://guitaristchord.com/api/all-songs";
+
 function ShowAllLyrics() {
   const [data, setData] = useState([]);
   const [songData, setSongData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(0);
-
+  const location = useLocation();
+  console.log(location.state);
   const nextPage = () => {
     setPage((oldPage) => {
       let nextPage = oldPage + 1;
@@ -107,15 +110,17 @@ function ShowAllLyrics() {
           )}
         </ul>
       </div>
-      <div className="mb-5">
-        <PaginateButton
-          data={data}
-          prevPage={prevPage}
-          nextPage={nextPage}
-          handlePage={handlePage}
-          page={page}
-        />
-      </div>
+      {data.length > 1 ? (
+        <div className="mb-5">
+          <PaginateButton
+            data={data}
+            prevPage={prevPage}
+            nextPage={nextPage}
+            handlePage={handlePage}
+            page={page}
+          />
+        </div>
+      ) : null}
     </>
   );
 }
