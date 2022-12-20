@@ -87,7 +87,7 @@ function ShowAllLyrics() {
                         <div className="card-body">
                           <Link
                             to={`/lyric/${song.slug}/${song.summary}`}
-                            className="card-title h6 text-decoration-none text-black"
+                            className="card-title h6  text-black"
                           >
                             {song.title}
                           </Link>

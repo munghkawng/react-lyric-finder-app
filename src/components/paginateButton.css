@@ -3,7 +3,7 @@
   justify-content: center;
 }
 .blocks {
-  width: 40px;
+  width: 3rem;
   line-height: 40px;
   text-align: center;
   border: 1px solid #dddddd;
@@ -30,3 +30,16 @@
   background-color: #1d201d;
   color: white;
 }
+
+/* @media screen and (max-width: 600px) {
+  .blocks {
+  width: 40px;
+  line-height: 40px;
+  text-align: center;
+  border: 1px solid #dddddd;
+  display: inline-block;
+  text-decoration: none;
+  color: black;
+  border-radius: 50%;
+}
+} */
