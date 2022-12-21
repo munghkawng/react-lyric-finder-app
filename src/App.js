@@ -29,6 +29,7 @@ function App() {
           <Route path="/" element={<ShareLayout />}>
             <Route index element={<HomePage />} />
             <Route path="/all-lyrics" element={<ShowAllLyrics />} />
+            <Route path="/search" element={<ShowAllLyrics />} />
             <Route path="/lyric/:lyric/:name" element={<LyricPage />} />
             <Route path="/artist/:slug" element={<ArtistProfile />} />
             <Route path="/artists" element={<AllArtistPage />} />

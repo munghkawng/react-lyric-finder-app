@@ -1,26 +1,17 @@
 import { FaBars } from "react-icons/fa";
-import { useContext, useRef, useEffect, useState } from "react";
+import { useContext, useRef, useEffect } from "react";
 import SongContext from "../Context";
-import axios from "axios";
+
 import { useNavigate } from "react-router-dom";
+import { useQuery } from "../QueryCustomHook";
+
 function SearchBar({ setShowLinks, showLinks }) {
   const { setFocus, query, setQuery } = useContext(SongContext);
+
   const inputContainerRef = useRef(null);
-  const [loading, setLoading] = useState(true);
-  const [searchData, setSearchData] = useState([]);
 
+  const { loading, queryData, error } = useQuery();
   const navigate = useNavigate();
-  let searchUrl = `https://guitaristchord.com/api/search/${query}`;
-
-  useEffect(() => {
-    const getSearchData = async () => {
-      const { data } = await axios(searchUrl);
-      setSearchData(data);
-      setLoading(false);
-    };
-
-    getSearchData();
-  }, [searchUrl]);
 
   useEffect(() => {
     const handleClickOutSide = (event) => {
@@ -28,7 +19,6 @@ function SearchBar({ setShowLinks, showLinks }) {
         inputContainerRef.current &&
         !inputContainerRef.current.contains(event.target)
       ) {
-        console.log(inputContainerRef.current.contains(event.target));
         setFocus(false);
       }
     };
@@ -39,15 +29,18 @@ function SearchBar({ setShowLinks, showLinks }) {
     };
   }, [inputContainerRef, setFocus]);
 
+  const handleFocusInput = () => {
+    setFocus(true);
+    // navigate("/search");
+  };
+
+  const handleOnChange = (e) => {
+    setQuery(e.target.value);
+  };
   const handleSearchSubmit = (e) => {
     e.preventDefault();
-    if (query.trim().length === 0) {
-      return;
-    } else {
-      setFocus(false);
-      setQuery("");
-      navigate("/all-lyrics", { state: searchData, loading: loading });
-    }
+
+    navigate("/search", { state: queryData, loading: loading, error: error });
   };
 
   return (
@@ -56,10 +49,10 @@ function SearchBar({ setShowLinks, showLinks }) {
         <input
           type="text"
           value={query}
-          onChange={(e) => setQuery(e.target.value)}
+          onChange={handleOnChange}
           className="input"
           placeholder="Search Song Lyrics.."
-          onFocus={() => setFocus(true)}
+          onFocus={handleFocusInput}
           ref={inputContainerRef}
         />
         <button type="submit" className="d-none"></button>
