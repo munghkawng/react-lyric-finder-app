@@ -51,7 +51,7 @@ function ShowAllLyrics() {
       <>
         <div className="card my-3">
           <div className="card-header">
-            <h3>All Lyrics</h3>
+            <h1>All Lyrics</h1>
           </div>
 
           <ul className="list-group list-group-flush ">

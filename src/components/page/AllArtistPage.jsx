@@ -1,48 +1,38 @@
 import ArtistsCard from "../ArtistsCard";
-import PaginateButton from "../PaginateButton";
 import { useState, useEffect } from "react";
+import { Button, Stack } from "@chakra-ui/react";
 import axios from "axios";
-import { paginate } from "../../paginate";
 import Loading from "../Loading";
 
-const showAllArtistUrl = "https://guitaristchord.com/api/all-artists";
 function AllArtistPage() {
-  const [data, setData] = useState([]);
+  const [hasMore, setHasMore] = useState(true);
   const [songData, setSongData] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [page, setPage] = useState(0);
-
-  const nextPage = () => {
-    setPage((oldPage) => {
-      let nextPage = oldPage + 1;
-      if (nextPage > data.length - 1) {
-        nextPage = 0;
-      }
-      return nextPage;
-    });
-  };
-
-  const prevPage = () => {
-    setPage((oldPage) => {
-      let prevPage = oldPage - 1;
-      if (prevPage < 0) {
-        prevPage = data.length - 1;
-      }
-      return prevPage;
-    });
-  };
-
-  const handlePage = (index) => {
-    setPage(index);
-  };
+  const [loading, setLoading] = useState(false);
+  const [controller, setController] = useState({
+    page: 1,
+    pageSize: 10,
+  });
 
   const getSongData = async () => {
-    setLoading(true);
+    let showAllArtistUrl = `https://guitaristchord.com/api/artists?page=${controller.page}&page_size=${controller.pageSize}`;
     try {
-      const { data } = await axios(showAllArtistUrl);
-      setData(paginate(data));
+      setLoading(true);
+      const response = await axios(showAllArtistUrl);
+      if (response.status === 200) {
+        const { data } = response.data;
+        console.log(data);
+        setSongData((prevData) => {
+          return [...new Set([...prevData, ...data])];
+        });
 
-      setLoading(false);
+        setController((prevData) => {
+          return { ...prevData, page: prevData.page + 1 };
+        });
+        setHasMore(data.length > 0);
+        setLoading(false);
+      } else {
+        throw new Error("Request failed");
+      }
     } catch (error) {
       console.log(error.response);
     }
@@ -50,33 +40,36 @@ function AllArtistPage() {
 
   useEffect(() => {
     getSongData();
+    // eslint-disable-next-line
   }, []);
-
-  useEffect(() => {
-    if (loading) return;
-    setSongData(data[page]);
-  }, [loading, page, data]);
 
   return (
     <div className="row mb-5">
       <h1 className="my-5 ms-4 h4">Artists</h1>
 
-      {loading ? (
-        <Loading />
-      ) : (
-        songData.map((artist) => {
-          return <ArtistsCard key={artist.id} {...artist} />;
-        })
+      {songData.map((artist) => {
+        return <ArtistsCard key={artist.id} {...artist} />;
+      })}
+      {loading && <Loading />}
+      {!loading && hasMore && (
+        <Stack
+          direction="row"
+          align="center"
+          size="lg"
+          justifyContent="center"
+          mb={4}
+        >
+          <Button
+            colorScheme="gray"
+            onClick={getSongData}
+            variant="solid"
+            size="md"
+            border="1px"
+          >
+            Load More
+          </Button>
+        </Stack>
       )}
-      <div className="mt-5">
-        <PaginateButton
-          data={data}
-          nextPage={nextPage}
-          prevPage={prevPage}
-          handlePage={handlePage}
-          page={page}
-        />
-      </div>
     </div>
   );
 }
