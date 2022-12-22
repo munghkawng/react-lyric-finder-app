@@ -38,19 +38,7 @@ function LyricPage() {
 
   return (
     <>
-      <div className="card  my-5 border-0">
-        <nav aria-label="breadcrumb">
-          <ol className="breadcrumb">
-            <li className="breadcrumb-item">
-              <Link to="/" className="text-black">
-                Home
-              </Link>
-            </li>
-            <li className="breadcrumb-item active" aria-current="page">
-              {loading ? <Loading /> : `${song.title} - ${song.summary}`}
-            </li>
-          </ol>
-        </nav>
+      <div className="card border-0   my-5">
         <div className="row align-items-center">
           <div className="col-md-2 d-none d-sm-block">
             {loading ? (

@@ -8,6 +8,7 @@ import SongCardContainer from "./components/SongCardContainer";
 import ShareLayout from "./components/page/ShareLayout";
 import ShowAllLyrics from "./components/ShowAllLyrics";
 import AllArtistPage from "./components/page/AllArtistPage";
+import NotFound from "./components/page/404";
 
 import SongContext from "./Context";
 
@@ -34,7 +35,7 @@ function App() {
             <Route path="/artist/:slug" element={<ArtistProfile />} />
             <Route path="/artists" element={<AllArtistPage />} />
             <Route path="/lyrics" element={<SongCardContainer />} />
-            <Route path="*" element={<div>Opp Error</div>} />
+            <Route path="*" element={<NotFound />} />
           </Route>
         </Routes>
 

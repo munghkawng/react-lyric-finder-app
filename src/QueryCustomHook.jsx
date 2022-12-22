@@ -17,23 +17,22 @@ export const useQuery = () => {
       let searchUrl;
       if (query) {
         searchUrl = `https://guitaristchord.com/api/search/${query}`;
-        try {
-          const { data } = await axios(searchUrl, {
-            headers: {
-              "Access-Control-Allow-Origin": "*",
-            },
-          });
-
-          setQueryData(data);
-
-          setLoading(false);
-        } catch (error) {
-          setError(true);
-
-          console.log(error.response);
-        }
       } else {
         return;
+      }
+      try {
+        const { data } = await axios(searchUrl, {
+          headers: {
+            "Access-Control-Allow-Origin": "*",
+          },
+        });
+
+        setQueryData(data);
+        setLoading(false);
+      } catch (error) {
+        setError(true);
+
+        console.log(error.response);
       }
     };
     getQuery();

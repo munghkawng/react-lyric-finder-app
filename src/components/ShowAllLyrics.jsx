@@ -1,51 +1,60 @@
 import PaginateButton from "./PaginateButton";
 import { useState, useEffect } from "react";
-import { paginate } from "../paginate";
+
 import Loading from "./Loading";
 import axios from "axios";
 import { Link, useLocation } from "react-router-dom";
 import SearchPage from "./page/SearchPage";
-
-const showAllLyricUrl = "https://guitaristchord.com/api/all-songs";
+import Pagination from "@mui/material/Pagination";
+import Stack from "@mui/material/Stack";
 
 function ShowAllLyrics() {
   const location = useLocation();
-  const [data, setData] = useState([]);
+  const [totalPageCount, setTotalPageCount] = useState(0);
   const [songData, setSongData] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [page, setPage] = useState(0);
-  console.log(location);
-  const nextPage = () => {
-    setPage((oldPage) => {
-      let nextPage = oldPage + 1;
-      if (nextPage > data.length - 1) {
-        nextPage = 0;
-      }
-      return nextPage;
-    });
-  };
+  const [controller, setController] = useState({
+    page: 1,
+    pageSize: 10,
+  });
 
-  const prevPage = () => {
-    setPage((oldPage) => {
-      let prevPage = oldPage - 1;
-      if (prevPage < 0) {
-        prevPage = data.length - 1;
-      }
-      return prevPage;
-    });
-  };
+  // const nextPage = () => {
+  //   setPage((oldPage) => {
+  //     let nextPage = oldPage + 1;
+  //     if (nextPage > data.length - 1) {
+  //       nextPage = 0;
+  //     }
+  //     return nextPage;
+  //   });
+  // };
 
-  const handlePage = (index) => {
-    setPage(index);
+  // const prevPage = () => {
+  //   setPage((oldPage) => {
+  //     let prevPage = oldPage - 1;
+  //     if (prevPage < 0) {
+  //       prevPage = data.length - 1;
+  //     }
+  //     return prevPage;
+  //   });
+  // };
+
+  const handleChange = (event, value) => {
+    console.log(event);
+    setController({ page: value });
   };
 
   const getSongData = async () => {
-    setLoading(true);
+    const allLyricsUrl = `https://guitaristchord.com/api/songs?page=${controller.page}&${controller.pageSize}`;
     try {
-      const { data } = await axios(showAllLyricUrl);
-      setData(paginate(data));
-
-      setLoading(false);
+      const response = await axios(allLyricsUrl);
+      if (response.status === 200) {
+        const { data } = response;
+        setSongData(data.data);
+        setTotalPageCount(data.last_page);
+        setLoading(false);
+      } else {
+        throw new Error("Request Failed");
+      }
     } catch (error) {
       console.log(error.response);
     }
@@ -53,17 +62,17 @@ function ShowAllLyrics() {
 
   useEffect(() => {
     getSongData();
-  }, []);
+  }, [controller]);
 
-  useEffect(() => {
-    if (loading) return;
-    setSongData(data[page]);
-  }, [loading, page, data]);
+  // useEffect(() => {
+  //   if (loading) return;
+  //   setSongData(data[page]);
+  // }, [loading, page, data]);
 
   if (location.state === null) {
     return (
       <>
-        <div className="card my-4">
+        <div className="card my-3">
           <div className="card-header">
             <h3>All Lyrics</h3>
           </div>
@@ -112,18 +121,17 @@ function ShowAllLyrics() {
             )}
           </ul>
         </div>
-
-        {data.length > 1 ? (
-          <div className="mb-5">
-            <PaginateButton
-              data={data}
-              prevPage={prevPage}
-              nextPage={nextPage}
-              handlePage={handlePage}
-              page={page}
+        <div>
+          <Stack spacing={4}>
+            <Pagination
+              count={totalPageCount}
+              size="large"
+              variant="outlined"
+              page={controller.page}
+              onChange={handleChange}
             />
-          </div>
-        ) : null}
+          </Stack>
+        </div>
       </>
     );
   } else {
