@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import ArtistsCard from "../ArtistsCard";
 import PaginateButton from "../PaginateButton";
 import { useState, useEffect } from "react";
@@ -60,19 +59,7 @@ function AllArtistPage() {
 
   return (
     <div className="row mb-5">
-      <h1 className="text-muted">Artists</h1>
-      <nav aria-label="breadcrumb" className="mb-2">
-        <ol className="breadcrumb">
-          <li className="breadcrumb-item">
-            <Link to="/" className="text-black">
-              Home
-            </Link>
-          </li>
-          <li className="breadcrumb-item active" aria-current="page">
-            Artists
-          </li>
-        </ol>
-      </nav>
+      <h1 className="my-5 ms-4 h4">Artists</h1>
 
       {loading ? (
         <Loading />

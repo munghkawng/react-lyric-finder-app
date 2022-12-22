@@ -61,7 +61,7 @@ function ShowAllLyrics() {
                   <div className="card mb-3 border-0 ">
                     <div className="row g-0 align-items-center">
                       <div className="col-md-1 col-2 d-flex">
-                        <span className="pe-2 text-muted my-auto">
+                        <span className="pe-2 text-muted my-auto me-2">
                           {index + 1}
                         </span>
                         <img
@@ -71,8 +71,8 @@ function ShowAllLyrics() {
                           style={{ width: "50px" }}
                         />
                       </div>
-                      <div className="col-md-11 col-10">
-                        <div className="card-body">
+                      <div className="col-md-11 col-9">
+                        <div className="card-body ms-4">
                           <Link
                             to={`/lyric/${song.slug}/${song.summary}`}
                             className="text-black"
